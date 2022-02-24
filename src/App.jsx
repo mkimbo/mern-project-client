@@ -12,6 +12,7 @@ import Admin from "./pages/Admin";
 import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth";
 import PersistLogin from "./components/PersistLogin";
+import PostView from "./pages/PostView";
 
 const ROLES = {
   User: 101,
@@ -58,6 +59,7 @@ const App = () => {
               element={<RequireAuth allowedRoles={[ROLES.User]} />}
             >
               <Route path="home" element={<Home />} />
+              <Route path="posts/:post_id" element={<PostView />} />
               <Route path="profile" element={<Profile />} />
             </Route>
             <Route

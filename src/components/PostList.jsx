@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import Post from "../components/Post";
+import { Grid, Typography } from "@mui/material";
 import { GlobalContext } from "../context/GlobalState";
 
 const PostList = () => {
@@ -35,6 +36,11 @@ const PostList = () => {
       {posts?.map((post) => (
         <Post post={post} key={post?._id} />
       ))}
+      {posts?.length < 1 && (
+        <Grid align="center">
+          <Typography>There are no posts yet.</Typography>
+        </Grid>
+      )}
     </>
   );
 };

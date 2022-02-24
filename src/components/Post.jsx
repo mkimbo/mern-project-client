@@ -7,13 +7,22 @@ import {
   Typography,
   Avatar,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { getDistanceToNowWithSuffix } from "../utils/dateFunctions";
 import { getUserInitials } from "../utils/helperFunctions";
 
 const Post = ({ post }) => {
   const authorInitials = getUserInitials(post?.author?.name);
+  const navigate = useNavigate();
   return (
-    <Card style={{ marginTop: 16, marginBottom: 16 }} elevation={1}>
+    <Card
+      onClick={(e) => {
+        e.stopPropagation();
+        navigate(`/posts/${post?._id}`);
+      }}
+      style={{ marginTop: 16, marginBottom: 16 }}
+      elevation={1}
+    >
       <CardHeader
         avatar={
           <Avatar
@@ -30,18 +39,12 @@ const Post = ({ post }) => {
             <Typography
               component="a"
               style={{ marginRight: 8, zIndex: 3 }}
-              /* onClick={(e) => {
-                        e.stopPropagation();
-                        history.push(
-                            `/users/${scroll?.author?._id}`
-                        );
-                    }} */
               variant="body2"
             >
               {` @${post?.author?.name}`}
             </Typography>
             <Typography variant="body2" color="textSecondary">
-              {getDistanceToNowWithSuffix(new Date(post?.date).getTime())}
+              {getDistanceToNowWithSuffix(post?.date)}
             </Typography>
           </div>
         }

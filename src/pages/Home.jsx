@@ -22,11 +22,6 @@ const Home = () => {
             <Grid item xs={12} sm={12} md={8}>
               <CreatePost />
               <PostList />
-              {/* {posts.length < 1 && (
-                <Grid align="center">
-                  <Typography>There are no posts yet.</Typography>
-                </Grid>
-              )} */}
             </Grid>
             {!mdDown && <Grid item lg={2}></Grid>}
           </Grid>
