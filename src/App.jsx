@@ -13,6 +13,7 @@ import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth";
 import PersistLogin from "./components/PersistLogin";
 import PostView from "./pages/PostView";
+import UserView from "./pages/UserView";
 
 const ROLES = {
   User: 101,
@@ -61,6 +62,7 @@ const App = () => {
               <Route path="home" element={<Home />} />
               <Route path="posts/:post_id" element={<PostView />} />
               <Route path="profile" element={<Profile />} />
+              <Route path="users/:user_id" element={<UserView />} />
             </Route>
             <Route
               path="/"

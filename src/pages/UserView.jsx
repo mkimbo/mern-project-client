@@ -11,6 +11,7 @@ import {
   Avatar,
   IconButton,
   useMediaQuery,
+  Button,
 } from "@mui/material";
 import {
   ArrowBack,
@@ -21,13 +22,18 @@ import { useNavigate } from "react-router-dom";
 import { getUserInitials } from "../utils/helperFunctions";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import useAuth from "../hooks/useAuth";
+import { useParams } from "react-router-dom";
 import { format } from "date-fns/esm";
 const PROFILE_URL = "/getUserById";
-const Profile = () => {
+const FOLLOW_URL = "/followUser";
+const UNFOLLOW_URL = "/unFollowUser";
+const UserView = () => {
   const [profile, setProfile] = useState();
   const [loading, setLoading] = useState();
+  const [followed, setFollowed] = useState();
   const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
+  const { user_id } = useParams();
   const { user } = useAuth();
   const mdDown = useMediaQuery("(max-width:1279px)");
 
@@ -40,7 +46,7 @@ const Profile = () => {
         setLoading(true);
         const response = await axiosPrivate.get(
           PROFILE_URL,
-          { params: { user_id: user?.email } },
+          { params: { user_id } },
           {
             signal: controller.signal,
           }
@@ -57,7 +63,55 @@ const Profile = () => {
       isMounted = false;
       controller.abort();
     };
-  }, [user, setProfile]);
+  }, [user_id, setProfile]);
+
+  useEffect(() => {
+    const followers = [];
+    profile?.followers?.forEach((follow) =>
+      followers.push(follow.user_id.email)
+    );
+    if (followers.includes(user?.email)) {
+      setFollowed(true);
+    } else {
+      setFollowed(false);
+    }
+  }, [setFollowed, profile]);
+
+  const handleFollowUser = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axiosPrivate.post(
+        FOLLOW_URL,
+        JSON.stringify({ user_id }),
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      setProfile(response.data);
+      setFollowed(true);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleUnFollowUser = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axiosPrivate.post(
+        UNFOLLOW_URL,
+        JSON.stringify({ user_id }),
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      setProfile(response.data);
+      setFollowed(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <Container maxWidth="lg">
@@ -97,7 +151,7 @@ const Profile = () => {
                 marginBottom: -60,
               }}
             >
-              <div className="d-flex">
+              <div style={{ display: "flex" }}>
                 <div>
                   <Avatar
                     variant="rounded"
@@ -111,19 +165,7 @@ const Profile = () => {
                   >
                     {getUserInitials(profile?.email)}
                   </Avatar>
-                  <Typography
-                    className="pt-1"
-                    variant="h6"
-                    color="primary"
-                    gutterBottom
-                  >
-                    {/* {format(
-                        new Date(
-                            eventData?.Events?.getById?.startDate
-                        ),
-                        'E, MMMM do y, h:mm aaa'
-                    )} */}
-                  </Typography>
+
                   <Typography
                     gutterBottom
                     color="textSecondary"
@@ -149,11 +191,20 @@ const Profile = () => {
                   className="space-between"
                 >
                   <Typography></Typography>
-                  <Typography
-                    className="text-success"
-                    variant="body2"
-                    component="div"
-                  ></Typography>
+                  <Typography variant="body2" component="div">
+                    {user?.email !== profile?.email && (
+                      <Button
+                        color="primary"
+                        onClick={
+                          followed ? handleUnFollowUser : handleFollowUser
+                        }
+                        variant="outlined"
+                        size="small"
+                      >
+                        {followed ? "Unfollow" : "Follow"}
+                      </Button>
+                    )}
+                  </Typography>
                 </div>
               </div>
             </CardContent>
@@ -220,4 +271,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default UserView;

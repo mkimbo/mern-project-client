@@ -17,6 +17,7 @@ import { getDistanceToNowWithSuffix } from "../utils/dateFunctions";
 import { getUserInitials } from "../utils/helperFunctions";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import useAuth from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import DeletePost from "./DeletePost";
 const POST_URL = "/getPostById";
@@ -37,7 +38,7 @@ const PostDetails = ({
   const [openDelete, setOpenDelete] = useState(false);
   const [errmsg, setErrMsg] = useState(false);
   const [liked, setLiked] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
     let isMounted = true;
 
@@ -149,8 +150,13 @@ const PostDetails = ({
               <div className="d-flex align-items-center">
                 <Typography
                   component="a"
-                  style={{ marginRight: 8, zIndex: 3 }}
+                  color="primary"
+                  style={{ marginRight: 8, zIndex: 3, cursor: "pointer" }}
                   variant="body2"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`/users/${post?.author?._id}`);
+                  }}
                 >
                   {` @${post?.author?.name}`}
                 </Typography>

@@ -38,8 +38,13 @@ const Post = ({ post }) => {
           <div className="d-flex align-items-center">
             <Typography
               component="a"
-              style={{ marginRight: 8, zIndex: 3 }}
+              color="primary"
+              style={{ marginRight: 8, zIndex: 3, cursor: "pointer" }}
               variant="body2"
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(`/users/${post?.author?._id}`);
+              }}
             >
               {` @${post?.author?.name}`}
             </Typography>
