@@ -21,11 +21,11 @@ import { useNavigate } from "react-router-dom";
 import { getUserInitials } from "../utils/helperFunctions";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import useAuth from "../hooks/useAuth";
-import { format } from "date-fns/esm";
+//import { format } from "date-fns/esm";
 const PROFILE_URL = "/getUserById";
 const Profile = () => {
   const [profile, setProfile] = useState();
-  const [loading, setLoading] = useState();
+  //const [loading, setLoading] = useState();
   const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
   const { user } = useAuth();
@@ -37,7 +37,7 @@ const Profile = () => {
     const controller = new AbortController();
     const getUserById = async () => {
       try {
-        setLoading(true);
+        //setLoading(true);
         const response = await axiosPrivate.get(
           PROFILE_URL,
           { params: { user_id: user?.email } },
@@ -45,7 +45,7 @@ const Profile = () => {
             signal: controller.signal,
           }
         );
-        setLoading(false);
+        //setLoading(false);
         isMounted && setProfile(response.data);
       } catch (err) {
         console.error(err);
@@ -57,7 +57,7 @@ const Profile = () => {
       isMounted = false;
       controller.abort();
     };
-  }, [user, setProfile]);
+  }, [user, setProfile, axiosPrivate]);
 
   return (
     <Container maxWidth="lg">

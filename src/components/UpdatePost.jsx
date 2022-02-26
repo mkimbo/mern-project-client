@@ -17,7 +17,7 @@ const UpdatePost = ({ postToEdit, setPost, setPostToEdit, setOpenUpdate }) => {
 
   const handleUpdatePost = async (e) => {
     e.preventDefault();
-    if (content.trim() == "") return;
+    if (content.trim() === "") return;
     try {
       const response = await axiosPrivate.post(
         UPDATE_POST_URL,

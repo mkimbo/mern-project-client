@@ -39,7 +39,7 @@ const Users = () => {
       isMounted = false;
       controller.abort();
     };
-  }, []);
+  }, [axiosPrivate, location, navigate]);
 
   return (
     <List sx={{ width: "100%", bgcolor: "background.paper" }}>

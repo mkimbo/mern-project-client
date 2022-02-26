@@ -25,7 +25,7 @@ const PersistLogin = () => {
     !user?.accessToken ? verifyRefreshToken() : setIsLoading(false);
 
     return () => (isMounted = false);
-  }, []);
+  }, [refresh, user]);
 
   return <>{!persist ? <Outlet /> : isLoading ? <Spinner /> : <Outlet />}</>;
 };

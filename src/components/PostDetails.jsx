@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   Divider,
@@ -65,7 +65,7 @@ const PostDetails = ({
       isMounted = false;
       controller.abort();
     };
-  }, [post_id, setPost]);
+  }, [post_id, setPost, axiosPrivate, setLoading]);
 
   useEffect(() => {
     const likedUsers = [];
@@ -75,7 +75,7 @@ const PostDetails = ({
     } else {
       setLiked(false);
     }
-  }, [setLiked, post]);
+  }, [setLiked, post, user]);
 
   const handleLikePost = async (e) => {
     e.preventDefault();
@@ -93,6 +93,7 @@ const PostDetails = ({
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response.");
+        console.log(errmsg);
       } else {
         setErrMsg("Post Like Failed.");
       }

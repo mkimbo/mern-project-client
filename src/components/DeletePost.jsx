@@ -19,7 +19,7 @@ const DeletePost = ({ setOpenDelete, openDelete, post }) => {
   const handleDeletePost = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosPrivate.post(
+      await axiosPrivate.post(
         DELETE_POST_URL,
         JSON.stringify({ post_id: post?._id }),
         {

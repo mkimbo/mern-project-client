@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Container, Typography, Box, Grid, useMediaQuery } from "@mui/material";
+import React from "react";
+import { Container, Box, Grid, useMediaQuery } from "@mui/material";
 import CreatePost from "../components/CreatePost";
 import PostList from "../components/PostList";
 

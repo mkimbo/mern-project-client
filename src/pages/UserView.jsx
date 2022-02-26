@@ -23,13 +23,13 @@ import { getUserInitials } from "../utils/helperFunctions";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import useAuth from "../hooks/useAuth";
 import { useParams } from "react-router-dom";
-import { format } from "date-fns/esm";
+//import { format } from "date-fns/esm";
 const PROFILE_URL = "/getUserById";
 const FOLLOW_URL = "/followUser";
 const UNFOLLOW_URL = "/unFollowUser";
 const UserView = () => {
   const [profile, setProfile] = useState();
-  const [loading, setLoading] = useState();
+  //const [loading, setLoading] = useState();
   const [followed, setFollowed] = useState();
   const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
@@ -43,7 +43,7 @@ const UserView = () => {
     const controller = new AbortController();
     const getUserById = async () => {
       try {
-        setLoading(true);
+        //setLoading(true);
         const response = await axiosPrivate.get(
           PROFILE_URL,
           { params: { user_id } },
@@ -51,7 +51,7 @@ const UserView = () => {
             signal: controller.signal,
           }
         );
-        setLoading(false);
+        //setLoading(false);
         isMounted && setProfile(response.data);
       } catch (err) {
         console.error(err);
@@ -63,7 +63,7 @@ const UserView = () => {
       isMounted = false;
       controller.abort();
     };
-  }, [user_id, setProfile]);
+  }, [user_id, setProfile, axiosPrivate]);
 
   useEffect(() => {
     const followers = [];
@@ -75,7 +75,7 @@ const UserView = () => {
     } else {
       setFollowed(false);
     }
-  }, [setFollowed, profile]);
+  }, [setFollowed, profile, user]);
 
   const handleFollowUser = async (e) => {
     e.preventDefault();

@@ -12,7 +12,7 @@ const CreatePost = () => {
 
   const handleCreatePost = async (e) => {
     e.preventDefault();
-    if (content.trim() == "") return;
+    if (content.trim() === "") return;
     try {
       const response = await axiosPrivate.post(
         CREATE_POST_URL,

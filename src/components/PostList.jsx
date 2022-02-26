@@ -29,7 +29,7 @@ const PostList = () => {
       isMounted = false;
       controller.abort();
     };
-  }, []);
+  }, [axiosPrivate,setPosts]);
 
   return (
     <>
