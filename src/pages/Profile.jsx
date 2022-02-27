@@ -11,6 +11,7 @@ import {
   Avatar,
   IconButton,
   useMediaQuery,
+  CircularProgress,
 } from "@mui/material";
 import {
   ArrowBack,
@@ -25,7 +26,7 @@ import useAuth from "../hooks/useAuth";
 const PROFILE_URL = "/getUserById";
 const Profile = () => {
   const [profile, setProfile] = useState();
-  //const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState();
   const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
   const { user } = useAuth();
@@ -37,7 +38,7 @@ const Profile = () => {
     const controller = new AbortController();
     const getUserById = async () => {
       try {
-        //setLoading(true);
+        setLoading(true);
         const response = await axiosPrivate.get(
           PROFILE_URL,
           { params: { user_id: user?.email } },
@@ -45,7 +46,7 @@ const Profile = () => {
             signal: controller.signal,
           }
         );
-        //setLoading(false);
+        setLoading(false);
         isMounted && setProfile(response.data);
       } catch (err) {
         console.error(err);
@@ -81,138 +82,146 @@ const Profile = () => {
           </Grid>
         )}
         <Grid item xs={12} sm={12} md={8} lg={7}>
-          <Card className="mb-3" variant={"outlined"}>
-            <CardMedia
-              style={{
-                height: 200,
-                backgroundColor: "#ddd",
-              }}
-              component="img"
-              // title='Contemplative Reptile'
-            />
-            <CardContent
-              style={{
-                position: "relative",
-                top: -60,
-                marginBottom: -60,
-              }}
-            >
-              <div className="d-flex">
-                <div>
-                  <Avatar
-                    variant="rounded"
-                    style={{
-                      backgroundColor: "#3e78ff",
-                      marginRight: 12,
-                      marginBottom: 12,
-                      width: 80,
-                      height: 80,
-                    }}
-                  >
-                    {getUserInitials(profile?.email)}
-                  </Avatar>
-                  <Typography
-                    className="pt-1"
-                    variant="h6"
-                    color="primary"
-                    gutterBottom
-                  >
-                    {/* {format(
+          {loading && (
+            <Grid align="center">
+              <CircularProgress thickness={4} size={64} color="primary" />
+            </Grid>
+          )}
+
+          {profile && (
+            <Card className="mb-3" variant={"outlined"}>
+              <CardMedia
+                style={{
+                  height: 200,
+                  backgroundColor: "#ddd",
+                }}
+                component="img"
+                // title='Contemplative Reptile'
+              />
+              <CardContent
+                style={{
+                  position: "relative",
+                  top: -60,
+                  marginBottom: -60,
+                }}
+              >
+                <div className="d-flex">
+                  <div>
+                    <Avatar
+                      variant="rounded"
+                      style={{
+                        backgroundColor: "#3e78ff",
+                        marginRight: 12,
+                        marginBottom: 12,
+                        width: 80,
+                        height: 80,
+                      }}
+                    >
+                      {getUserInitials(profile?.email)}
+                    </Avatar>
+                    <Typography
+                      className="pt-1"
+                      variant="h6"
+                      color="primary"
+                      gutterBottom
+                    >
+                      {/* {format(
                         new Date(
                             eventData?.Events?.getById?.startDate
                         ),
                         'E, MMMM do y, h:mm aaa'
                     )} */}
-                  </Typography>
-                  <Typography
-                    gutterBottom
-                    color="textSecondary"
-                    variant="body1"
-                  >
-                    {profile?.email}
-                  </Typography>
-                  <Typography
-                    gutterBottom
-                    color="textSecondary"
-                    variant="body2"
-                  >
-                    {`@${profile?.name}`}
-                  </Typography>
-                </div>
-
-                <div
-                  style={{
-                    flex: 1,
-                    position: "relative",
-                    top: 60,
-                  }}
-                  className="space-between"
-                >
-                  <Typography></Typography>
-                  <Typography
-                    className="text-success"
-                    variant="body2"
-                    component="div"
-                  ></Typography>
-                </div>
-              </div>
-            </CardContent>
-            <CardActions>
-              <div
-                className="center-horizontal space-between"
-                style={{ width: "100%" }}
-              >
-                <div
-                //onClick={() => history.push('/profile/posts')}
-                //className={classes.clickableTypography}
-                >
-                  <Typography variant="body2">Posts</Typography>
-                  <div className="center-horizontal">
-                    <CollectionsBookmarkRounded
-                      color="primary"
-                      className="mx-2"
-                      fontSize="small"
-                    />
-                    <Typography variant="body2">{profile?.posts}</Typography>
-                  </div>
-                </div>
-
-                <div
-                //onClick={() => history.push('/profile/posts')}
-                //className={classes.clickableTypography}
-                >
-                  <Typography variant="body2">Followers</Typography>
-                  <div className="center-horizontal">
-                    <PersonRounded
-                      color="primary"
-                      className="mx-2"
-                      fontSize="small"
-                    />
-                    <Typography variant="body2">
-                      {profile?.followers?.length}
+                    </Typography>
+                    <Typography
+                      gutterBottom
+                      color="textSecondary"
+                      variant="body1"
+                    >
+                      {profile?.email}
+                    </Typography>
+                    <Typography
+                      gutterBottom
+                      color="textSecondary"
+                      variant="body2"
+                    >
+                      {`@${profile?.name}`}
                     </Typography>
                   </div>
-                </div>
 
-                <div
-                //onClick={() => history.push('/profile/posts')}
-                //className={classes.clickableTypography}
-                >
-                  <Typography variant="body2">Following</Typography>
-                  <div className="center-horizontal">
-                    <PersonRounded
-                      color="primary"
-                      className="mx-2"
-                      fontSize="small"
-                    />
-                    <Typography variant="body2">
-                      {profile?.following?.length}
-                    </Typography>
+                  <div
+                    style={{
+                      flex: 1,
+                      position: "relative",
+                      top: 60,
+                    }}
+                    className="space-between"
+                  >
+                    <Typography></Typography>
+                    <Typography
+                      className="text-success"
+                      variant="body2"
+                      component="div"
+                    ></Typography>
                   </div>
                 </div>
-              </div>
-            </CardActions>
-          </Card>
+              </CardContent>
+              <CardActions>
+                <div
+                  className="center-horizontal space-between"
+                  style={{ width: "100%" }}
+                >
+                  <div
+                  //onClick={() => history.push('/profile/posts')}
+                  //className={classes.clickableTypography}
+                  >
+                    <Typography variant="body2">Posts</Typography>
+                    <div className="center-horizontal">
+                      <CollectionsBookmarkRounded
+                        color="primary"
+                        className="mx-2"
+                        fontSize="small"
+                      />
+                      <Typography variant="body2">{profile?.posts}</Typography>
+                    </div>
+                  </div>
+
+                  <div
+                  //onClick={() => history.push('/profile/posts')}
+                  //className={classes.clickableTypography}
+                  >
+                    <Typography variant="body2">Followers</Typography>
+                    <div className="center-horizontal">
+                      <PersonRounded
+                        color="primary"
+                        className="mx-2"
+                        fontSize="small"
+                      />
+                      <Typography variant="body2">
+                        {profile?.followers?.length}
+                      </Typography>
+                    </div>
+                  </div>
+
+                  <div
+                  //onClick={() => history.push('/profile/posts')}
+                  //className={classes.clickableTypography}
+                  >
+                    <Typography variant="body2">Following</Typography>
+                    <div className="center-horizontal">
+                      <PersonRounded
+                        color="primary"
+                        className="mx-2"
+                        fontSize="small"
+                      />
+                      <Typography variant="body2">
+                        {profile?.following?.length}
+                      </Typography>
+                    </div>
+                  </div>
+                </div>
+              </CardActions>
+            </Card>
+          )}
         </Grid>
         <Grid item md={4} lg={2}></Grid>
       </Grid>

@@ -29,7 +29,8 @@ const PostList = () => {
       isMounted = false;
       controller.abort();
     };
-  }, [axiosPrivate,setPosts]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

@@ -12,6 +12,7 @@ import {
   IconButton,
   useMediaQuery,
   Button,
+  CircularProgress,
 } from "@mui/material";
 import {
   ArrowBack,
@@ -29,7 +30,7 @@ const FOLLOW_URL = "/followUser";
 const UNFOLLOW_URL = "/unFollowUser";
 const UserView = () => {
   const [profile, setProfile] = useState();
-  //const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState();
   const [followed, setFollowed] = useState();
   const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
@@ -43,7 +44,7 @@ const UserView = () => {
     const controller = new AbortController();
     const getUserById = async () => {
       try {
-        //setLoading(true);
+        setLoading(true);
         const response = await axiosPrivate.get(
           PROFILE_URL,
           { params: { user_id } },
@@ -51,7 +52,7 @@ const UserView = () => {
             signal: controller.signal,
           }
         );
-        //setLoading(false);
+        setLoading(false);
         isMounted && setProfile(response.data);
       } catch (err) {
         console.error(err);
@@ -135,135 +136,142 @@ const UserView = () => {
           </Grid>
         )}
         <Grid item xs={12} sm={12} md={8} lg={7}>
-          <Card className="mb-3" variant={"outlined"}>
-            <CardMedia
-              style={{
-                height: 200,
-                backgroundColor: "#ddd",
-              }}
-              component="img"
-              // title='Contemplative Reptile'
-            />
-            <CardContent
-              style={{
-                position: "relative",
-                top: -60,
-                marginBottom: -60,
-              }}
-            >
-              <div style={{ display: "flex" }}>
-                <div>
-                  <Avatar
-                    variant="rounded"
-                    style={{
-                      backgroundColor: "#3e78ff",
-                      marginRight: 12,
-                      marginBottom: 12,
-                      width: 80,
-                      height: 80,
-                    }}
-                  >
-                    {getUserInitials(profile?.email)}
-                  </Avatar>
-
-                  <Typography
-                    gutterBottom
-                    color="textSecondary"
-                    variant="body1"
-                  >
-                    {profile?.email}
-                  </Typography>
-                  <Typography
-                    gutterBottom
-                    color="textSecondary"
-                    variant="body2"
-                  >
-                    {`@${profile?.name}`}
-                  </Typography>
-                </div>
-
-                <div
-                  style={{
-                    flex: 1,
-                    position: "relative",
-                    top: 60,
-                  }}
-                  className="space-between"
-                >
-                  <Typography></Typography>
-                  <Typography variant="body2" component="div">
-                    {user?.email !== profile?.email && (
-                      <Button
-                        color="primary"
-                        onClick={
-                          followed ? handleUnFollowUser : handleFollowUser
-                        }
-                        variant="outlined"
-                        size="small"
-                      >
-                        {followed ? "Unfollow" : "Follow"}
-                      </Button>
-                    )}
-                  </Typography>
-                </div>
-              </div>
-            </CardContent>
-            <CardActions>
-              <div
-                className="center-horizontal space-between"
-                style={{ width: "100%" }}
+          {loading && (
+            <Grid align="center">
+              <CircularProgress thickness={4} size={64} color="primary" />
+            </Grid>
+          )}
+          {profile && (
+            <Card className="mb-3" variant={"outlined"}>
+              <CardMedia
+                style={{
+                  height: 200,
+                  backgroundColor: "#ddd",
+                }}
+                component="img"
+                // title='Contemplative Reptile'
+              />
+              <CardContent
+                style={{
+                  position: "relative",
+                  top: -60,
+                  marginBottom: -60,
+                }}
               >
-                <div
-                //onClick={() => history.push('/profile/posts')}
-                //className={classes.clickableTypography}
-                >
-                  <Typography variant="body2">Posts</Typography>
-                  <div className="center-horizontal">
-                    <CollectionsBookmarkRounded
-                      color="primary"
-                      className="mx-2"
-                      fontSize="small"
-                    />
-                    <Typography variant="body2">{profile?.posts}</Typography>
-                  </div>
-                </div>
+                <div style={{ display: "flex" }}>
+                  <div>
+                    <Avatar
+                      variant="rounded"
+                      style={{
+                        backgroundColor: "#3e78ff",
+                        marginRight: 12,
+                        marginBottom: 12,
+                        width: 80,
+                        height: 80,
+                      }}
+                    >
+                      {getUserInitials(profile?.email)}
+                    </Avatar>
 
-                <div
-                //onClick={() => history.push('/profile/posts')}
-                //className={classes.clickableTypography}
-                >
-                  <Typography variant="body2">Followers</Typography>
-                  <div className="center-horizontal">
-                    <PersonRounded
-                      color="primary"
-                      className="mx-2"
-                      fontSize="small"
-                    />
-                    <Typography variant="body2">
-                      {profile?.followers?.length}
+                    <Typography
+                      gutterBottom
+                      color="textSecondary"
+                      variant="body1"
+                    >
+                      {profile?.email}
+                    </Typography>
+                    <Typography
+                      gutterBottom
+                      color="textSecondary"
+                      variant="body2"
+                    >
+                      {`@${profile?.name}`}
+                    </Typography>
+                  </div>
+
+                  <div
+                    style={{
+                      flex: 1,
+                      position: "relative",
+                      top: 60,
+                    }}
+                    className="space-between"
+                  >
+                    <Typography></Typography>
+                    <Typography variant="body2" component="div">
+                      {user?.email !== profile?.email && (
+                        <Button
+                          color="primary"
+                          onClick={
+                            followed ? handleUnFollowUser : handleFollowUser
+                          }
+                          variant="outlined"
+                          size="small"
+                        >
+                          {followed ? "Unfollow" : "Follow"}
+                        </Button>
+                      )}
                     </Typography>
                   </div>
                 </div>
-
+              </CardContent>
+              <CardActions>
                 <div
-                //onClick={() => history.push('/profile/posts')}
-                //className={classes.clickableTypography}
+                  className="center-horizontal space-between"
+                  style={{ width: "100%" }}
                 >
-                  <Typography variant="body2">Following</Typography>
-                  <div className="center-horizontal">
-                    <PersonRounded
-                      color="primary"
-                      className="mx-2"
-                      fontSize="small"
-                    />
-                    <Typography variant="body2">
-                      {profile?.following?.length}
-                    </Typography>
+                  <div
+                  //onClick={() => history.push('/profile/posts')}
+                  //className={classes.clickableTypography}
+                  >
+                    <Typography variant="body2">Posts</Typography>
+                    <div className="center-horizontal">
+                      <CollectionsBookmarkRounded
+                        color="primary"
+                        className="mx-2"
+                        fontSize="small"
+                      />
+                      <Typography variant="body2">{profile?.posts}</Typography>
+                    </div>
+                  </div>
+
+                  <div
+                  //onClick={() => history.push('/profile/posts')}
+                  //className={classes.clickableTypography}
+                  >
+                    <Typography variant="body2">Followers</Typography>
+                    <div className="center-horizontal">
+                      <PersonRounded
+                        color="primary"
+                        className="mx-2"
+                        fontSize="small"
+                      />
+                      <Typography variant="body2">
+                        {profile?.followers?.length}
+                      </Typography>
+                    </div>
+                  </div>
+
+                  <div
+                  //onClick={() => history.push('/profile/posts')}
+                  //className={classes.clickableTypography}
+                  >
+                    <Typography variant="body2">Following</Typography>
+                    <div className="center-horizontal">
+                      <PersonRounded
+                        color="primary"
+                        className="mx-2"
+                        fontSize="small"
+                      />
+                      <Typography variant="body2">
+                        {profile?.following?.length}
+                      </Typography>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </CardActions>
-          </Card>
+              </CardActions>
+            </Card>
+          )}
         </Grid>
         <Grid item md={4} lg={2}></Grid>
       </Grid>
