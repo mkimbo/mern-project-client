@@ -36,7 +36,7 @@ const PostList = () => {
 
   return (
     <>
-      {loading && (
+      {loading && posts?.length < 1 && (
         <Grid align="center">
           <CircularProgress thickness={4} size={64} color="primary" />
         </Grid>
