@@ -6,7 +6,7 @@
 
 A simple MERN Stack App made for practice & learning. CRUD, Authentication with JWT & Deployment using Netlify and Heroku.
 
-[App Image](./blog.PNG)
+![App Image](./mern.PNG)
 
 [APP Demo.](https://mern-mini-social.netlify.app/)
 
