@@ -25,10 +25,10 @@ A simple MERN Stack App made for practice & learning. CRUD, Authentication with 
 
 Features:
 
-- Register/Login with Json Web Tokens (Access and Refresh Tokens)
-- Role-based user authorization
-- Secure Tokens stored in HttpOnly Cookie
+- User Authentication with Json Web Tokens (Access and Refresh Tokens)
 - Persistant login (Remember device based on user preference)
+- Tokens stored in HttpOnly Cookies for security
+- Role-based user authorization
 - CRUD operations API
 
 # Author

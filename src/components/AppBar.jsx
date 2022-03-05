@@ -15,6 +15,7 @@ import MenuItem from "@mui/material/MenuItem";
 import useAuth from "../hooks/useAuth";
 import useLogout from "../hooks/useLogout";
 import { getUserInitials } from "../utils/helperFunctions";
+//import logo from "../assets/r2-d2.png";
 
 const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -55,7 +56,7 @@ const NavBar = () => {
             component="div"
             sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
           >
-            Logo
+            <Avatar src="r2-d2.png"></Avatar>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -113,6 +114,14 @@ const NavBar = () => {
               </MenuItem>
             </Menu>
           </Box>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+          >
+            <Avatar src="r2-d2.png"></Avatar>
+          </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <Button
