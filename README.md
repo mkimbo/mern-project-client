@@ -8,7 +8,7 @@ A simple MERN Stack App made for practice & learning. CRUD, Authentication with 
 
 ![App Image](./mern.PNG)
 
-[APP Demo.](https://mern-mini-social.netlify.app/)
+[Live Demo.](https://mern-mini-social.netlify.app/)
 
 [Backend Code.](https://github.com/mkimbo/mern-project-server)
 

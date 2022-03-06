@@ -54,7 +54,14 @@ const NavBar = () => {
             variant="h6"
             noWrap
             component="div"
-            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+            sx={{
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              navigate("/");
+            }}
           >
             <Avatar src="r2-d2.png"></Avatar>
           </Typography>
@@ -119,6 +126,9 @@ const NavBar = () => {
             noWrap
             component="div"
             sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+            onClick={() => {
+              navigate("/");
+            }}
           >
             <Avatar src="r2-d2.png"></Avatar>
           </Typography>

@@ -3,6 +3,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { themeL, themeD } from "./themes";
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
+import About from "./pages/About";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
@@ -18,6 +19,7 @@ import UserView from "./pages/UserView";
 const ROLES = {
   User: 101,
   Admin: 102,
+  SuperUser: 103,
 };
 
 const App = () => {
@@ -49,6 +51,7 @@ const App = () => {
           element={<Layout themeSwitchCofig={themeSwitchConfig} />}
         >
           {/* Public Routes */}
+          <Route path="/" element={<About />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="unauthorized" element={<Unauthorized />} />
