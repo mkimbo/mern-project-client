@@ -39,9 +39,9 @@ const PostDetails = ({
   const [errmsg, setErrMsg] = useState(false);
   const [liked, setLiked] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
     let isMounted = true;
-
     const controller = new AbortController();
     const getPostById = async () => {
       try {
