@@ -14,20 +14,17 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
     height: "150%",
-    width: "100%",
   },
   overlay: {
     background: "transparent",
     position: "absolute",
-    width: "100%",
-    overflowX: "hidden",
   },
 }));
 
 const Layout = () => {
   const classes = useStyles();
   return (
-    <Container maxWidth="xl" component="main" className={classes.mainParticles}>
+    <Container component="main" className={classes.mainParticles}>
       <div>
         <Particles
           params={{
@@ -65,12 +62,12 @@ const Layout = () => {
           }}
         />
       </div>
-      <div className={classes.overlay}>
-        <Container>
+      <Container className={classes.overlay}>
+        <Container maxWidth="xl">
           <NavBar />
           <Outlet />
         </Container>
-      </div>
+      </Container>
     </Container>
   );
 };
